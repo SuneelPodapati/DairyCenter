@@ -4,5 +4,4 @@
 /packages
 /.vs
 **/jquery-3.4.1-vsdoc.js
-/App/dist
 **/node_modules
