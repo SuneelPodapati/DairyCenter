@@ -27,6 +27,13 @@ jobs:
 
       - name: Publish to folder
         run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
+        
+      - name: Build and Copy Front End
+        run: |
+          cd App
+          npm install
+          npm run build
+          cp dist/ /published/App/ -rf
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
