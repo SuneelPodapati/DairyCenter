@@ -18,6 +18,11 @@ namespace DairyCenter
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Api",
+                url: "Home/api/{*route}",
+                defaults: new { controller = "Home", action = "Api", route = UrlParameter.Optional }
+            );
         }
     }
 }

@@ -187,39 +187,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
-    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
-    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
-    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
-    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
-    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
-    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
-    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
-    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -233,8 +203,21 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="App\karma.conf.js" />
+    <Content Include="App\src\app\app.component.css" />
+    <Content Include="App\src\app\app.component.html" />
+    <Content Include="App\src\app\bill-summary\bill-summary.component.css" />
+    <Content Include="App\src\app\bill-summary\bill-summary.component.html" />
+    <Content Include="App\src\app\print-all-bills\print-all-bills.component.html" />
+    <Content Include="App\src\app\procurement\procurements-sheet.component.css" />
+    <Content Include="App\src\app\procurement\procurements-sheet.component.html" />
+    <Content Include="App\src\app\producer-bill\producer-bill.component.css" />
+    <Content Include="App\src\app\producer-bill\producer-bill.component.html" />
+    <Content Include="App\src\app\producers\producers-sheet.component.css" />
+    <Content Include="App\src\app\producers\producers-sheet.component.html" />
+    <Content Include="App\src\favicon.ico" />
+    <Content Include="App\src\index.html" />
+    <Content Include="App\src\styles.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -250,25 +233,17 @@
     <Content Include="Scripts\app\home.viewmodel.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\HelpPage\Views\Web.config" />
-    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
-    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="App\.browserslistrc" />
+    <Content Include="App\.editorconfig" />
+    <Content Include="App\angular.json" />
+    <Content Include="App\package-lock.json" />
+    <Content Include="App\package.json" />
+    <Content Include="App\README.md" />
+    <Content Include="App\tsconfig.app.json" />
+    <Content Include="App\tsconfig.base.json" />
+    <Content Include="App\tsconfig.json" />
+    <Content Include="App\tsconfig.spec.json" />
+    <Content Include="App\tslint.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -294,7 +269,6 @@
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Home\_Home.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
@@ -351,6 +325,39 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="App\src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="App\src\app\app-title.component.ts" />
+    <TypeScriptCompile Include="App\src\app\app.component.ts" />
+    <TypeScriptCompile Include="App\src\app\app.module.ts" />
+    <TypeScriptCompile Include="App\src\app\bill-summary\bill-summary.component.ts" />
+    <TypeScriptCompile Include="App\src\app\bill-summary\index.ts" />
+    <TypeScriptCompile Include="App\src\app\models\bill-summary.ts" />
+    <TypeScriptCompile Include="App\src\app\models\index.ts" />
+    <TypeScriptCompile Include="App\src\app\models\procurement.ts" />
+    <TypeScriptCompile Include="App\src\app\models\producer-bill.ts" />
+    <TypeScriptCompile Include="App\src\app\models\producer.ts" />
+    <TypeScriptCompile Include="App\src\app\print-all-bills\index.ts" />
+    <TypeScriptCompile Include="App\src\app\print-all-bills\print-all-bills.component.ts" />
+    <TypeScriptCompile Include="App\src\app\procurement\index.ts" />
+    <TypeScriptCompile Include="App\src\app\procurement\procurements-sheet.component.ts" />
+    <TypeScriptCompile Include="App\src\app\producer-bill\index.ts" />
+    <TypeScriptCompile Include="App\src\app\producer-bill\producer-bill.component.ts" />
+    <TypeScriptCompile Include="App\src\app\producers\index.ts" />
+    <TypeScriptCompile Include="App\src\app\producers\producers-sheet.component.ts" />
+    <TypeScriptCompile Include="App\src\app\services\app.store.ts" />
+    <TypeScriptCompile Include="App\src\app\services\index.ts" />
+    <TypeScriptCompile Include="App\src\app\services\procurement.service.ts" />
+    <TypeScriptCompile Include="App\src\app\services\producer.service.ts" />
+    <TypeScriptCompile Include="App\src\app\services\spinner.interceptor.ts" />
+    <TypeScriptCompile Include="App\src\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="App\src\environments\environment.ts" />
+    <TypeScriptCompile Include="App\src\main.ts" />
+    <TypeScriptCompile Include="App\src\polyfills.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

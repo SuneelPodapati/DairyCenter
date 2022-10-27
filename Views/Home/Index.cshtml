@@ -1,7 +1,9 @@
-﻿@section SPAViews {
-    @Html.Partial("_Home")
+﻿@{ 
+    ViewBag.Title = "Home";
 }
-@section Scripts{
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/bundles/app")
+@section SPAViews {
+    <app-root></app-root>
+    <script src="~/App/dist/dairy-center/runtime.js" defer></script>
+    <script src="~/App/dist/dairy-center/polyfills.js" defer></script>
+    <script src="~/App/dist/dairy-center/main.js" defer></script>
 }
