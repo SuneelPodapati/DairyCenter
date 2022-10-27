@@ -31,9 +31,9 @@ jobs:
       - name: Build and Copy Front End
         run: |
           cd App
-          npm install
+          npm install --force
           npm run build
-          cp dist/ /published/App/ -rf
+          cp dist/ /published/App/ -Recurse -Force
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
