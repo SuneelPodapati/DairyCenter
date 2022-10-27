@@ -1,0 +1,12 @@
+<div class="sheet">
+    <div>
+        <h2>{{title}}
+            <span><input class="control no-print ml-100 add" type="button" (click)="addProducer()"
+                    value="Add Producer"></span>
+            <span><input class="control no-print ml-100 save" type="button" (click)="save()" value="Save"
+                    [hidden]="!allowSave"></span>
+        </h2>
+    </div>
+    <!-- <label>Show All</label><input type="checkbox" [checked]="showAll" (change)="showAll = !showAll"> -->
+    <hot-table [settings]="hotSettings" [hotId]="hotId"></hot-table>
+</div>

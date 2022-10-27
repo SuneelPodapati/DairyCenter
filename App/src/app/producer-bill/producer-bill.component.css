@@ -1,0 +1,12 @@
+::ng-deep .colHeader {
+    font-weight: bold;
+}
+
+::ng-deep .text-left {
+    text-align: left;
+}
+
+.save {
+    width: 200px;
+    position: absolute;
+}

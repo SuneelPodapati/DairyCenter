@@ -1,0 +1,145 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~handsontable/dist/handsontable.full.css';
+
+.print {
+    display: none;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+
+    .print {
+        display: inline;
+    }
+
+    .pagebreak {
+        page-break-before: always;
+    }
+
+    .handsontable .ht_master thead,
+    .handsontable .ht_master tr th,
+    .handsontable .ht_clone_left thead {
+        visibility: hidden;
+    }
+}
+
+.ht_clone_top {
+    display: none;
+}
+
+.ht_clone_bottom {
+    display: none;
+}
+
+.ht_clone_left {
+    display: none;
+}
+
+.handsontable .ht_master thead,
+.handsontable .ht_master tr th,
+.handsontable .ht_clone_left thead {
+    visibility: visible;
+}
+
+.header {
+    padding: 10px;
+    background-color: #cdcdcd;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: darkcyan;
+}
+
+.navbar {
+    border-radius: 5px;
+    padding: 5px;
+    text-align: left;
+}
+
+.navbar-link {
+    text-decoration: none;
+    background-color: darkcyan;
+    margin-right: 10px;
+    border: 3px solid darkcyan;
+    border-radius: 3px;
+    color: azure;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.active-link {
+    background-color: darkturquoise;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.sheet {
+    font-weight: 400;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.control {
+    font-weight: bold;
+    font-style: oblique;
+    font-size: large;
+    cursor: pointer;
+}
+
+.right {
+    float: right;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.ml-100 {
+    margin-left: 100px;
+}
+
+.ml-50 {
+    margin-left: 50px;
+}
+
+.center {
+    text-align: center;
+}
+
+.indian-red {
+    color: indianred;
+}
+
+.add {
+    border-color: coral;
+    border-style: double;
+}
+
+.save {
+    border-color: yellowgreen;
+    border-style: groove;
+}
+
+.highlight {
+    font-weight: 500;
+}
+
+.editable {
+    background-color: yellowgreen !important;
+}

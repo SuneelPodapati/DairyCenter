@@ -1,0 +1,23 @@
+<div class="sheet">
+    <h2 class="no-print">{{title}} (Start Date:
+        <input class="control" type="date" [value]="billStartDate | date:'yyyy-MM-dd'"
+            (change)="changeDate($event, 'billStartDate')">
+        ) to (End Date:
+        <input class="control" type="date" [value]="billEndDate | date:'yyyy-MM-dd'"
+            (change)="changeDate($event, 'billEndDate')">
+        )
+        <span><input class="control save ml-50 mt-5" type="button" (click)="print()" value="Print"></span>
+        <span class="right"> (Total:
+            <input class="control" type="checkbox" [checked]="showTotal" (change)="changeShowTotal($event)">
+            )</span>
+    </h2>
+    <div class="bill-summary-title center">
+        <h2 class="print">
+            {{mccCode}}
+            <br />
+            {{title}} {{billStartDate | date:'dd.MM.yyyy'}} TO {{billEndDate | date:'dd.MM.yyyy'}}
+        </h2>
+    </div>
+    <br />
+    <hot-table [settings]="hotSettings" [hotId]="hotId"></hot-table>
+</div>

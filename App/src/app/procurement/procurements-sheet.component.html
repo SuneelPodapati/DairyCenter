@@ -1,0 +1,22 @@
+<div class="sheet">
+    <h2 class="no-print">{{title}} (Date:
+        <input class="control" type="date" [value]="procurementDate | date:'yyyy-MM-dd'" (change)="changeDate($event)"
+            [disabled]="(savedChanges? '' : 'disabled')">
+        ) (Shift:
+        <select class="control" [value]="procurementShift" (change)="changeShift($event)"
+            [disabled]="(savedChanges? '' : 'disabled')">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+        </select>
+        )
+        <span><input class="control no-print ml-50 add" type="button" (click)="addProcurement()"
+                value="Add Procurement"></span>
+        <span><input class="control no-print ml-50 save" type="button" (click)="save()" value="Save"
+                [hidden]="!allowSave || showTotal"></span>
+        <span class="right"> (Total:
+            <input class="control" type="checkbox" [checked]="showTotal" (change)="changeShowTotal($event)">
+            )</span>
+    </h2>
+    <h2 class="print">{{title}} (Date: {{procurementDate | date:'dd-MM-yyyy'}}) (Shift: {{procurementShift}}) </h2>
+    <hot-table [settings]="hotSettings" [hotId]="hotId"></hot-table>
+</div>
