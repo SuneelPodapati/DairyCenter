@@ -11,8 +11,8 @@ namespace DairyCenter.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Display(Name = "Hometown")]
-        public string Hometown { get; set; }
+        [Display(Name = "Name")]
+        public string Name { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -76,6 +76,11 @@ namespace DairyCenter.Models
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -84,9 +89,6 @@ namespace DairyCenter.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        [Display(Name = "Hometown")]
-        public string Hometown { get; set; }
     }
 
     public class ResetPasswordViewModel
