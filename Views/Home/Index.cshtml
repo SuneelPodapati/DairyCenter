@@ -1,5 +1,10 @@
 ﻿@{ 
     ViewBag.Title = "Home";
+    <script>
+        localStorage["rate"] = @ViewBag.Rate;
+        localStorage["incentiveRate"] = @ViewBag.IncentiveRate;
+        localStorage["premiumRate"] = @ViewBag.PremiumRate;
+    </script>
 }
 @section SPAViews {
     <app-root></app-root>

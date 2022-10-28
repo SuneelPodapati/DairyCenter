@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace DairyCenter
 {
@@ -16,18 +13,6 @@ namespace DairyCenter
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                 "~/Scripts/jquery.unobtrusive*",
                 "~/Scripts/jquery.validate*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-                "~/Scripts/knockout-{version}.js",
-                "~/Scripts/knockout.validation.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                "~/Scripts/sammy-{version}.js",
-                "~/Scripts/app/common.js",
-                "~/Scripts/app/app.datamodel.js",
-                "~/Scripts/app/app.viewmodel.js",
-                "~/Scripts/app/home.viewmodel.js",
-                "~/Scripts/app/_run.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.

@@ -1,8 +1,5 @@
 ﻿using Microsoft.Owin;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 [assembly: OwinStartup(typeof(DairyCenter.Startup))]
 

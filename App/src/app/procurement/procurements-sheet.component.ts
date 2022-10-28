@@ -4,6 +4,7 @@ import Handsontable from 'handsontable';
 import { IProcurement, Procurement } from "../models";
 import { AppStore, ProcurementService, ProducerService } from '../services';
 import { Router } from '@angular/router';
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: 'procurements-sheet',
@@ -60,9 +61,9 @@ export class ProcurementsSheetComponent implements OnInit {
     procurementDate: Date = new Date();
     procurementShift: string = 'AM';
     showTotal: boolean = false;
-    rate: number = 700;
-    incentiveRate: number = 15;
-    premiumRate: number = 0.1;
+    rate: number = this.store.load('rate') || environment.rate;
+    incentiveRate: number = this.store.load('incentiveRate') || environment.incentiveRate;
+    premiumRate: number = this.store.load('premiumRate') || environment.premiumRate;
     producerIds: string[] = [];
 
     hot = () => this.hotRegisterer.getInstance(this.hotId)

@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  rate: 700,
+  incentiveRate: 15,
+  premiumRate: 0.1,
   apiEndpoint: "http://localhost:1020"
 };
 

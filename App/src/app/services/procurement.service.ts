@@ -28,7 +28,8 @@ export class ProcurementService {
     }
 
     getBillProcurements(fromDate: Date, toDate: Date, producerCode?: string): Observable<IProcurement[]> {
-        return this.http.get<IProcurement[]>(`${this.url}/Bill/${fromDate.toISOString()}/${toDate.toISOString()}${(producerCode ? '/' + producerCode : '')}`);
+        let slug = '/XXXXX' // Add slug to support routes ending with .* to be handled by MVC Routing 
+        return this.http.get<IProcurement[]>(`${this.url}/Bill/${fromDate.toISOString()}/${toDate.toISOString()}${(producerCode ? '/' + producerCode : '')}${slug}`);
     }
     bulkUpdate(procurements: IProcurement[]): any {
         let updateInserts = procurements.map(p => new Upsert<IProcurement>(p._id, p));

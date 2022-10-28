@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -22,10 +23,10 @@ namespace DairyCenter.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public virtual IDbSet<Rates> Rates { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
+        {}
 
         public static ApplicationDbContext Create()
         {

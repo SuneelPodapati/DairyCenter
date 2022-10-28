@@ -1,23 +1,53 @@
-﻿using System.Configuration;
+﻿using DairyCenter.Models;
+using Microsoft.AspNet.Identity.Owin;
+using System.Configuration;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web;
+using System.Linq;
 
 namespace DairyCenter.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        private ApplicationDbContext _context;
+        public ApplicationDbContext DbContext
+        {
+            get
+            {
+                return _context ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            }
+            private set
+            {
+                _context = value;
+            }
+        }
+
+        public HomeController()
+        {
+        }
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public ActionResult Index()
         {
+            var rates = DbContext.Rates.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+            ViewBag.Rate = rates?.Rate ?? 0;
+            ViewBag.IncentiveRate = rates?.IncentiveRate ?? 0;
+            ViewBag.PremiumRate = rates?.PremiumRate ?? 0;
             return View();
         }
 
-
         public async Task<string> Api(string route)
         {
+            route = route.Replace("/XXXXX", "");  // Remove slug added to support routes ending with .* 
             var http = new HttpClient();
             var apiAuth = ConfigurationManager.AppSettings["API_SECRET_HEADER"];
             var endpoint = ConfigurationManager.AppSettings["API_EndPoint"];

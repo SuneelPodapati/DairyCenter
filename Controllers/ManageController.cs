@@ -15,15 +15,19 @@ namespace DairyCenter.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public ManageController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, 
+            ApplicationSignInManager signInManager,
+            ApplicationDbContext context)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _context = context;
         }
 
         public ApplicationSignInManager SignInManager
@@ -50,12 +54,25 @@ namespace DairyCenter.Controllers
             }
         }
 
+        public ApplicationDbContext DbContext
+        {
+            get
+            {
+                return _context ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            }
+            private set
+            {
+                _context = value;
+            }
+        }
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : message == ManageMessageId.ChangeRatesSuccess ? "Rates has been updated."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
@@ -245,6 +262,31 @@ namespace DairyCenter.Controllers
         }
 
         //
+        // GET: /Manage/ChangeRates
+        public ActionResult ChangeRates()
+        {
+            var rates = DbContext.Rates.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+            return View(rates ?? new Rates());
+        }
+
+        //
+        // POST: /Manage/ChangeRates
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeRates(Rates model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            model.CreatedOn = DateTime.Now;
+            model.CreatedBy = User.Identity.Name;
+            DbContext.Rates.Add(model);
+            await DbContext.SaveChangesAsync();
+            return RedirectToAction("Index", new { Message = ManageMessageId.ChangeRatesSuccess });
+        }
+
+        //
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
         {
@@ -377,6 +419,7 @@ namespace DairyCenter.Controllers
         {
             AddPhoneSuccess,
             ChangePasswordSuccess,
+            ChangeRatesSuccess,
             SetTwoFactorSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,
