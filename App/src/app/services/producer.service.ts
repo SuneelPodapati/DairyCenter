@@ -15,12 +15,9 @@ export class ProducerService {
         return this.http.get<IProducer[]>(`${this.url}/${status}`);
     }
 
-    addProducer(producer: IProducer) {
-        return this.http.post(this.url, producer);
-    }
-
     updateProducer(producer: IProducer) {
-        return this.http.put(this.url, producer);
+        let slug = '/XXXXX' // Add slug to support routes ending with .* to be handled by MVC Routing 
+        return this.http.put(this.url + slug, producer);
     }
 
     deactivateProducer(producer: IProducer) {

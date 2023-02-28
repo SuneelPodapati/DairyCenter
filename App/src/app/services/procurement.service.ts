@@ -15,14 +15,6 @@ export class ProcurementService {
         return this.http.get<IProcurement[]>(`${this.url}/${date.toISOString()}/${shift}`);
     }
 
-    addProcurement(procurement: IProcurement) {
-        return this.http.post(this.url, procurement);
-    }
-
-    updateProcurement(procurement: IProcurement) {
-        return this.http.put(this.url, procurement);
-    }
-
     deleteProcurement(procurement: IProcurement) {
         return this.http.delete(`${this.url}/${procurement._id}`);
     }
