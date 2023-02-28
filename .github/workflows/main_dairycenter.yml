@@ -32,6 +32,7 @@ jobs:
         run: |
           cd App
           npm install --force
+          $env:NODE_OPTIONS = "--openssl-legacy-provider"
           npm run build
           cp dist/ /published/App/ -Recurse -Force
 
