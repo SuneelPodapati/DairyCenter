@@ -202,6 +202,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\dist\dairy-center\main.js" />
+    <Content Include="App\dist\dairy-center\polyfills.js" />
+    <Content Include="App\dist\dairy-center\runtime.js" />
     <Content Include="App\karma.conf.js" />
     <Content Include="App\src\app\app.component.css" />
     <Content Include="App\src\app\app.component.html" />
