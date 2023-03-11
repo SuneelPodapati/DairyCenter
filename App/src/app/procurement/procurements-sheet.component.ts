@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { HotTableRegisterer } from '@handsontable/angular';
 import Handsontable from 'handsontable';
-import { IProcurement, Procurement } from "../models";
+import { IProcurement, IProducer, Procurement } from "../models";
 import { AppStore, ProcurementService, ProducerService } from '../services';
 import { Router } from '@angular/router';
 import { environment } from "src/environments/environment";
@@ -25,8 +25,8 @@ export class ProcurementsSheetComponent implements OnInit {
 
     ngOnInit(): void {
         this.producerService.getProducers().subscribe(resp => {
-            this.producerIds = resp.map(x => x.code);
-            if (this.producerIds.length > 0) {
+            this.producers = resp;
+            if (this.producers.length > 0) {
                 let unSavedData = this.store.load<IProcurement[]>(this.dataKey);
                 if (unSavedData && unSavedData.length > 0
                     && confirm(`You have UNSAVED data for ${new Date(unSavedData[0].date).toLocaleDateString()}, ${unSavedData[0].shift} shift, RESTORE it?`)) {
@@ -64,7 +64,7 @@ export class ProcurementsSheetComponent implements OnInit {
     rate: number = this.store.load('rate') || environment.rate;
     incentiveRate: number = this.store.load('incentiveRate') || environment.incentiveRate;
     premiumRate: number = this.store.load('premiumRate') || environment.premiumRate;
-    producerIds: string[] = [];
+    producers: IProducer[] = [];
 
     hot = () => this.hotRegisterer.getInstance(this.hotId)
     hotData = (data?: IProcurement[]): IProcurement[] => {
@@ -176,7 +176,7 @@ export class ProcurementsSheetComponent implements OnInit {
         columns: [
             { title: 'Date', data: 'date', readOnly: true, renderer: this.dateRenderer },
             { title: 'Shift', data: 'shift', validator: /^AM$|^PM$/, readOnly: true },
-            { title: 'Producer code', data: 'producerCode', validator: (value, cb) => cb(this.producerIds.includes(value)) },
+            { title: 'Producer code', data: 'producerCode', validator: (value, cb) => cb(this.producers.map(x => x.code).includes(value)) },
             { title: 'Quantity', data: 'quantity', type: 'numeric', validator: (value, cb) => cb(value > 0), numericFormat: { pattern: '0,0.00' } },
             { title: 'Fat', data: 'fat', type: 'numeric', validator: (value, cb) => cb(value > 0), numericFormat: { pattern: '0,0.0' } },
             { title: 'Kg Fat', data: 'kgFat', readOnly: true, type: 'numeric', numericFormat: { pattern: '0,0.000' } },
@@ -280,17 +280,14 @@ export class ProcurementsSheetComponent implements OnInit {
 
     calculate(procurement: IProcurement): void {
         procurement.kgFat = procurement.quantity * Math.min(procurement.fat, 10) / 100;
-        //procurement.kgFat = this.roundToDecimal(procurement.kgFat, 2);
-        procurement.grossAmount = procurement.kgFat * procurement.rate
-            + procurement.quantity * procurement.premiumRate * Math.max(0, procurement.fat - 10) * 10;
-        //procurement.grossAmount = this.roundToDecimal(procurement.grossAmount, 2);
+        
+        let rate = this.producers.find(x => x.code == procurement.producerCode)?.specialRate || procurement.rate;
+        let amount = procurement.kgFat * rate;
+        let premiumAmount = procurement.quantity * procurement.premiumRate * Math.max(0, procurement.fat - 10) * 10;
+        
+        procurement.grossAmount = amount + premiumAmount;
         procurement.incentiveAmount = procurement.kgFat * procurement.incentiveRate;
-        //procurement.incentiveAmount = this.roundToDecimal(procurement.incentiveAmount, 2);
         procurement.totalAmount = procurement.grossAmount + procurement.incentiveAmount;
-    }
-
-    roundToDecimal(value: number, decimals: number): number {
-        return Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
     }
 
     clearLocalData(): void {

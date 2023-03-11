@@ -61,9 +61,23 @@ export class ProducersSheetComponent implements OnInit {
     if (this.producers.length > 0 && this.producers.length >= row) {
       TD.innerHTML = this.producers[row].name;
       if (!this.producers[row].active) {
-        TD.style.backgroundColor = 'cadetblue';
+        TD.style.backgroundColor = 'crimson';
       }
       else {
+        TD.style.backgroundColor = '';
+      }
+    }
+  }
+
+  specialRateRenderer = (hotInstance, TD, row, col, prop, value, cellProperties) => {
+    if (this.producers.length > 0 && this.producers.length >= row) {
+      if (this.producers[row].specialRate > 0) {
+        TD.innerHTML = this.producers[row].specialRate.toFixed(1);
+        TD.style.backgroundColor = 'aquamarine';
+        TD.style.textAlign = 'right';
+      }
+      else {
+        TD.innerHTML = '';
         TD.style.backgroundColor = '';
       }
     }
@@ -78,18 +92,20 @@ export class ProducersSheetComponent implements OnInit {
     columns: [
       { title: 'Producer Code', data: 'code', validator: (value, cb) => cb(value > 0 && this.producerIds.filter(x => x == value).length <= 1) },
       { title: 'Name', data: 'name', validator: /^[a-zA-Z0-9.\s,-]{3,}/, renderer: this.nameRenderer },
+      { title: 'Special Rate', data: 'specialRate', type: 'numeric', validator: (value, cb) => cb(!value || value > 0), renderer: this.specialRateRenderer },
       { title: 'Contact No.', data: 'contactNumber', validator: /^$|^\d{10}$/ },
       { title: 'Bank Account No.', data: 'bankAccountNumber', validator: /^$|^[0-9]{5,20}$/ },
       { title: 'Bank IFSC Code', data: 'bankIfscCode', validator: /^$|^[A-Za-z]{4}\d{7}$/ },
     ],
-    colWidths: ['25px', '100px', '50px', '50px', '50px'],
+    colWidths: ['25px', '100px', '25px', '50px', '50px', '50px'],
     dataSchema: {
       code: '',
       name: '',
       active: true,
       contactNumber: '',
       bankAccountNumber: '',
-      bankIfscCode: ''
+      bankIfscCode: '',
+      specialRate: null
     },
     stretchH: 'all',
     readOnlyCellClassName: 'read-only-class',
