@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     ViewBag.Title = "Home";
     <script>
         localStorage["rate"] = @ViewBag.Rate;
@@ -8,7 +8,5 @@
 }
 @section SPAViews {
     <app-root></app-root>
-    <script src="~/App/dist/dairy-center/runtime.js" defer></script>
-    <script src="~/App/dist/dairy-center/polyfills.js" defer></script>
-    <script src="~/App/dist/dairy-center/main.js" defer></script>
+    @Scripts.Render("~/SPA")
 }
