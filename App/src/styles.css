@@ -23,6 +23,10 @@
     .handsontable .ht_clone_left thead {
         visibility: hidden;
     }
+  
+    .print-text-size {
+        font-size: 1.25em;
+    }
 }
 
 .ht_clone_top {
