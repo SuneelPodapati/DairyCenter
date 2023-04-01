@@ -109,7 +109,7 @@ export class ProducerBillComponent implements OnInit {
         colWidths: ['150', '50', '150', '100', '100', '150', '150', '150'],
         readOnlyCellClassName: 'not-dimmed',
         colHeaders: true,
-        tableClassName: "center",
+        tableClassName: "center print-text-size",
         mergeCells: this.mergeCells
     }
 
@@ -131,9 +131,9 @@ export class ProducerBillComponent implements OnInit {
     loansHotSettings: Handsontable.GridSettings = {
         licenseKey: 'non-commercial-and-evaluation',
         readOnlyCellClassName: 'not-dimmed',
-        tableClassName: "center",
+        tableClassName: "center print-text-size",
         afterChange: this.loanDataChanged,
-        colWidths: ['200', '150', '150', '150', '200', '150'],
+        colWidths: ['200', '200', '150', '150', '150', '150'],
         cell: [
             { row: 0, col: 0, readOnly: true, className: 'highlight htRight' },
             { row: 0, col: 2, readOnly: true, className: 'highlight htRight' },
