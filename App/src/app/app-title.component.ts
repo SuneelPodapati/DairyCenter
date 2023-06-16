@@ -11,5 +11,5 @@ import { Component } from '@angular/core';
         </header>`,
 })
 export class AppTitleComponent {
-    title = 'Sri Satya Sai Milk Center, Puretipalli';
+    title = `Sri Satya Sai Milk Center, ${localStorage['center']}`;
 }

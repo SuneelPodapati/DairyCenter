@@ -14,6 +14,8 @@ namespace DairyCenter.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+
+        private string[] Centers = new string[] { "Puretipalli", "Kalavalla" };
         private ApplicationDbContext _context;
         public ApplicationDbContext DbContext
         {
@@ -38,11 +40,24 @@ namespace DairyCenter.Controllers
 
         public ActionResult Index()
         {
+            Session["Center"] = Session["Center"] ?? Centers[0];
+            ViewBag.Center = Session["Center"];
             var rates = DbContext.Rates.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+            ViewBag.Centers = new SelectList(Centers, Session["Center"] as string);
             ViewBag.Rate = rates?.Rate ?? 0;
             ViewBag.IncentiveRate = rates?.IncentiveRate ?? 0;
             ViewBag.PremiumRate = rates?.PremiumRate ?? 0;
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangeCenter(string center)
+        {
+            if(Centers.Contains(center))
+            {
+                Session["Center"] = center;
+            }
+            return RedirectToAction("Index");
         }
 
         public async Task<string> Api(string route)
@@ -54,6 +69,7 @@ namespace DairyCenter.Controllers
             var url = $"{endpoint}/api/{route}";
             var request = new HttpRequestMessage(new HttpMethod(Request.HttpMethod), url);
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiAuth);
+            request.Headers.Add("Center", Session["Center"] as string);
             switch (request.Method.Method.ToUpper())
             {
                 case "POST":

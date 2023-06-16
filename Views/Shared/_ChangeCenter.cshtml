@@ -1,0 +1,14 @@
+﻿@if (Request.IsAuthenticated && ViewBag.Centers != null)
+{
+    using (Html.BeginForm("ChangeCenter", "Home", new { area = "" }, FormMethod.Post, new { role = "form", @class = "nav navbar-nav change-center" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.DropDownList("center", (SelectList)ViewBag.Centers, new { onchange = "this.form.submit();", @class = "form-control" })
+    }
+}
+<style>
+    .change-center {
+        margin-top: 8px;
+        margin-left: 20px;
+    }
+</style>

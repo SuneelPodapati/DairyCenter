@@ -281,6 +281,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Manage\ChangeRates.cshtml" />
+    <Content Include="Views\Shared\_ChangeCenter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
