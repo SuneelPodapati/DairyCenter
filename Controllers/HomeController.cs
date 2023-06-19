@@ -14,8 +14,6 @@ namespace DairyCenter.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-
-        private string[] Centers = new string[] { "Puretipalli", "Kalavalla" };
         private ApplicationDbContext _context;
         public ApplicationDbContext DbContext
         {
@@ -40,20 +38,23 @@ namespace DairyCenter.Controllers
 
         public ActionResult Index()
         {
-            Session["Center"] = Session["Center"] ?? Centers[0];
+            var center = Session["Center"] as string ?? DbContext.Centers[0];
+            Session["Center"] = center;
             ViewBag.Center = Session["Center"];
-            var rates = DbContext.Rates.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-            ViewBag.Centers = new SelectList(Centers, Session["Center"] as string);
+            var rates = DbContext.Rates.Where(x => x.Center == center)
+                .OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+            ViewBag.Centers = new SelectList(DbContext.Centers, center);
             ViewBag.Rate = rates?.Rate ?? 0;
             ViewBag.IncentiveRate = rates?.IncentiveRate ?? 0;
             ViewBag.PremiumRate = rates?.PremiumRate ?? 0;
+            ViewBag.BonusRate = rates?.BonusRate ?? 0;
             return View();
         }
 
         [HttpPost]
         public ActionResult ChangeCenter(string center)
         {
-            if(Centers.Contains(center))
+            if(DbContext.Centers.Contains(center))
             {
                 Session["Center"] = center;
             }

@@ -1,15 +1,48 @@
-﻿@model DairyCenter.Models.Rates
+﻿@using DairyCenter.Models;
+@model DairyCenter.Models.Rates
 @{
     ViewBag.Title = "Rates";
+    var colors = new List<string> { "panel-primary", "panel-success", "panel-info", "panel-warning", "panel-danger" };
 }
 
 <h2>@ViewBag.Title.</h2>
+
+<hr />
+<div style="display: flex;grid-gap: 20px;">
+    @foreach (var centerRate in ViewBag.CenterRates as List<Rates>)
+    {
+        <div class="panel @colors.OrderBy(x => Guid.NewGuid()).Take(1).First()">
+            <div class="panel-heading">@centerRate.Center</div>
+            <div class="panel-body">
+                @Html.LabelFor(m => m.Rate, new { @class = "control-label" }): @centerRate.Rate
+                <br />
+                @Html.LabelFor(m => m.IncentiveRate, new { @class = "control-label" }): @centerRate.IncentiveRate
+                <br />
+                @Html.LabelFor(m => m.PremiumRate, new { @class = "control-label" }): @centerRate.PremiumRate
+                <br />
+                @Html.LabelFor(m => m.BonusRate, new { @class = "control-label" }): @centerRate.BonusRate
+                <br />
+                @Html.LabelFor(m => m.CreatedOn, new { @class = "control-label" }): @centerRate.CreatedOn
+                <br />
+                @Html.LabelFor(m => m.CreatedBy, new { @class = "control-label" }): @centerRate.CreatedBy
+            </div>
+        </div>
+    }
+</div>
+
+
 
 @using (Html.BeginForm("ChangeRates", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Center, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.Center, (SelectList)ViewBag.Centers, new { @class = "form-control" })
+        </div>
+    </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Rate, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -26,6 +59,12 @@
         @Html.LabelFor(m => m.PremiumRate, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.PremiumRate, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.BonusRate, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.BonusRate, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

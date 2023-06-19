@@ -28,6 +28,12 @@ namespace DairyCenter.Models
         public double PremiumRate { get; set; }
 
 
+        [Required]
+        [Range(0.0, double.MaxValue)]
+        [Display(Name = "Bonus Rate per litre")]
+        public double BonusRate { get; set; }
+
+        public string Center { get; set; }
 
         [Display(Name = "Last updated on")]
         public DateTime CreatedOn { get; set; }

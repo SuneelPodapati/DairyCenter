@@ -4,6 +4,7 @@ import { HotTableRegisterer } from '@handsontable/angular';
 import Handsontable from 'handsontable';
 import { IProducer, IProcurement, Procurement } from '../models';
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: 'producer-bill',
@@ -155,13 +156,13 @@ export class ProducerBillComponent implements OnInit {
             { row: 0, col: 3, readOnly: true, type: 'numeric', numericFormat: { pattern: '0,0.00' } },
             { row: 0, col: 5, readOnly: true, type: 'numeric', numericFormat: { pattern: '0,0.00' } },
             { row: 2, col: 5, readOnly: true, type: 'numeric', numericFormat: { pattern: '0,0.00' } },
+            { row: 3, col: 5, readOnly: true, type: 'numeric', numericFormat: { pattern: '0,0.00' } },
             { row: 4, col: 2, readOnly: true, type: 'numeric', numericFormat: { pattern: '0,0.00' } },
             { row: 5, col: 2, readOnly: true, type: 'numeric', numericFormat: { pattern: '0,0.00' } },
             { row: 6, col: 2, readOnly: true, type: 'numeric', numericFormat: { pattern: '0,0.00' } },
             { row: 7, col: 5, readOnly: true, type: 'numeric', numericFormat: { pattern: '0,0' } },
 
             { row: 1, col: 5, readOnly: true },
-            { row: 3, col: 3, readOnly: true },
             { row: 4, col: 3, readOnly: true },
             { row: 5, col: 3, readOnly: true },
             { row: 6, col: 3, readOnly: true },
@@ -176,7 +177,7 @@ export class ProducerBillComponent implements OnInit {
             { row: 2, col: 0, rowspan: 1, colspan: 2 },
             { row: 2, col: 3, rowspan: 1, colspan: 2 },
             { row: 3, col: 0, rowspan: 1, colspan: 2 },
-            { row: 3, col: 3, rowspan: 1, colspan: 3 },
+            { row: 3, col: 3, rowspan: 1, colspan: 2 },
             { row: 4, col: 0, rowspan: 1, colspan: 2 },
             { row: 4, col: 3, rowspan: 1, colspan: 3 },
             { row: 5, col: 0, rowspan: 1, colspan: 2 },
@@ -294,6 +295,10 @@ export class ProducerBillComponent implements OnInit {
     get totalRate(): string {
         return this.totalQuantity != 0 ? (this.totalAmount / this.totalQuantity).toFixed(2) : "";
     }
+    get bonusAmount(): number {
+        let bonusRate: number = this.store.load('bonusRate') || environment.bonusRate;
+        return bonusRate > 0 ? (this.totalQuantity * bonusRate) : 0;
+    }
     get loanData(): string[][] {
         return [
             ['Rate/Ltr.', this.rate, 'Incentive/Ltr.', this.incentiveRate, 'Total Rate/Ltr.', this.totalRate],
@@ -301,7 +306,7 @@ export class ProducerBillComponent implements OnInit {
                 'Loan Amount Rs.', this.selectedProducer?.loanAmount?.toString(),
             this.selectedProducer?.loan2Amount?.toString(), this.selectedProducer?.loan2Date],
             ['Interest Rs.', '', this.selectedProducer?.interestAmount?.toString(), 'Bill Amount Rs.', '', this.totalAmount.toString()],
-            ['Other Rs.', '', this.selectedProducer?.otherAmount?.toString()],
+            ['Other Rs.', '', this.selectedProducer?.otherAmount?.toString(), 'Bonus Amount Rs.', '', this.bonusAmount.toString()],
             ['Rounded Bill Amount Rs.', '', this.roundedBillAmount?.toString()],
             ['Loan Recovered Rs.', '', this.loanAmountRecovered.toString(),],
             ['Loan Balanace Rs.', '', this.loanBalanceAmount?.toString()],
@@ -309,7 +314,7 @@ export class ProducerBillComponent implements OnInit {
         ]
     }
     get roundedBillAmount(): number {
-        return Math.round(this.totalAmount);
+        return Math.round(this.totalAmount + this.bonusAmount);
     }
     get tempRecoveryAmount(): number {
         return this.roundedBillAmount

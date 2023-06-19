@@ -265,8 +265,13 @@ namespace DairyCenter.Controllers
         // GET: /Manage/ChangeRates
         public ActionResult ChangeRates()
         {
-            var rates = DbContext.Rates.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-            return View(rates ?? new Rates());
+            var currentCenter = Session["Center"] as string ?? DbContext.Centers[0];
+            var centerRates = DbContext.Rates.GroupBy(x => x.Center,
+                (key, group) => group.OrderByDescending(y => y.CreatedOn).FirstOrDefault()).ToList();
+            var currentCenterLatestRate = centerRates.FirstOrDefault(x => x.Center == currentCenter);
+            ViewBag.CenterRates = centerRates;
+            ViewBag.Centers = new SelectList(DbContext.Centers, currentCenter);
+            return View(currentCenterLatestRate);
         }
 
         //
@@ -277,6 +282,12 @@ namespace DairyCenter.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var currentCenter = Session["Center"] as string ?? DbContext.Centers[0];
+                var centerRates = DbContext.Rates.GroupBy(x => x.Center,
+                    (key, group) => group.OrderByDescending(y => y.CreatedOn).FirstOrDefault()).ToList();
+                var currentCenterLatestRate = centerRates.FirstOrDefault(x => x.Center == currentCenter);
+                ViewBag.CenterRates = centerRates;
+                ViewBag.Centers = new SelectList(DbContext.Centers, currentCenter);
                 return View(model);
             }
             model.CreatedOn = DateTime.Now;

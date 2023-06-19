@@ -23,6 +23,7 @@ namespace DairyCenter.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public string[] Centers = new string[] { "Puretipalli", "Kalavalla" };
         public virtual IDbSet<Rates> Rates { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
