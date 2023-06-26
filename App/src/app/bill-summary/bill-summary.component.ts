@@ -4,6 +4,7 @@ import { HotTableRegisterer } from '@handsontable/angular';
 import Handsontable from 'handsontable';
 import { IBillSummary, IProducer } from '../models'
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Component({
     selector: 'bill-summary',
@@ -88,7 +89,20 @@ export class BillSummaryComponent implements OnInit {
                 {
                     ...p,
                     quantity: procurements.filter(x => x.producerCode == p.code).reduce((s, c) => s + c.quantity, 0),
-                    amount: Math.round(procurements.filter(x => x.producerCode == p.code).reduce((s, c) => s + c.totalAmount, 0))
+                    amount: procurements.filter(x => x.producerCode == p.code).reduce((s, c) => s + c.totalAmount, 0)
+                }));
+            let bonusRate: number = this.store.load('bonusRate') || environment.bonusRate;
+            if (bonusRate > 0) {
+                this.billData = this.billData.map(p => (
+                    {
+                        ...p,
+                        amount: p.amount + (p.quantity * bonusRate)
+                    }));
+            }
+            this.billData = this.billData.map(p => (
+                {
+                    ...p,
+                    amount: Math.round(p.amount)
                 }));
             this.hot().loadData(this.billData);
             this.showTotal = false;
