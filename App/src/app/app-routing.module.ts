@@ -5,6 +5,7 @@ import { ProcurementsSheetComponent } from './procurement';
 import { BillSummaryComponent } from './bill-summary';
 import { ProducerBillComponent } from './producer-bill';
 import { PrintAllBillsComponent } from './print-all-bills';
+import { MetricsComponent } from './metrics/metrics.component';
 import { Observable } from 'rxjs';
 
 export class GuardProducersSheet implements CanActivate {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'print-all-bills',
     component: PrintAllBillsComponent
+  },
+  {
+    path: 'metrics',
+    component: MetricsComponent
   }
 ];
 

@@ -48,6 +48,7 @@ namespace DairyCenter.Controllers
             ViewBag.IncentiveRate = rates?.IncentiveRate ?? 0;
             ViewBag.PremiumRate = rates?.PremiumRate ?? 0;
             ViewBag.BonusRate = rates?.BonusRate ?? 0;
+            ViewBag.DashboardUrl = ConfigurationManager.AppSettings[$"DASHBOARD_{center}"];
             return View();
         }
 
