@@ -279,15 +279,39 @@ export class ProcurementsSheetComponent implements OnInit {
     }
 
     calculate(procurement: IProcurement): void {
-        procurement.kgFat = procurement.quantity * Math.min(procurement.fat, 10) / 100;
-        
-        let rate = this.producers.find(x => x.code == procurement.producerCode)?.specialRate || procurement.rate;
+        let fat = Math.min(procurement.fat, 10);
+        procurement.kgFat = procurement.quantity * fat / 100;
+        let rate = 0;
+        let specialRate = this.producers.find(x => x.code == procurement.producerCode)?.specialRate;
+        if (!!specialRate) {
+            rate = this.parseSpecialRate(specialRate, fat);
+        }
+        rate = rate || this.rate;
         let amount = procurement.kgFat * rate;
         let premiumAmount = procurement.quantity * procurement.premiumRate * Math.max(0, procurement.fat - 10) * 10;
         
+        procurement.rate = rate;
         procurement.grossAmount = amount + premiumAmount;
         procurement.incentiveAmount = procurement.kgFat * procurement.incentiveRate;
         procurement.totalAmount = procurement.grossAmount + procurement.incentiveAmount;
+    }
+
+    parseSpecialRate(specialRate: string, fat: number): number {
+        try {
+            let fatBrackets = specialRate.trim().split(',');
+            for (let i = 0; i < fatBrackets.length; i++) {
+                let e = fatBrackets[i].trim();
+                let rate = Number.parseFloat(e.split(':')[1].trim());
+                let min = Number.parseFloat(e.split('-')[0].trim());
+                let max = Number.parseFloat(e.split(':')[0].split('-')[1].trim());
+                if (min < fat && fat <= max) {
+                    return rate;
+                }
+            }
+        } catch (error) {
+            alert('There is an error in Special rate, please fix!')
+        }
+        return 0;
     }
 
     clearLocalData(): void {

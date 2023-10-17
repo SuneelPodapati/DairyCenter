@@ -69,20 +69,6 @@ export class ProducersSheetComponent implements OnInit {
     }
   }
 
-  specialRateRenderer = (hotInstance, TD, row, col, prop, value, cellProperties) => {
-    if (this.producers.length > 0 && this.producers.length >= row) {
-      if (this.producers[row].specialRate > 0) {
-        TD.innerHTML = this.producers[row].specialRate.toFixed(1);
-        TD.style.backgroundColor = 'aquamarine';
-        TD.style.textAlign = 'right';
-      }
-      else {
-        TD.innerHTML = '';
-        TD.style.backgroundColor = '';
-      }
-    }
-  }
-
   get producerIds() {
     return this.producers.map(x => x.code);
   }
@@ -92,7 +78,7 @@ export class ProducersSheetComponent implements OnInit {
     columns: [
       { title: 'Producer Code', data: 'code', validator: (value, cb) => cb(value > 0 && this.producerIds.filter(x => x == value).length <= 1) },
       { title: 'Name', data: 'name', validator: /^[a-zA-Z0-9.\s,-]{3,}/, renderer: this.nameRenderer },
-      { title: 'Special Rate', data: 'specialRate', type: 'numeric', validator: (value, cb) => cb(!value || value > 0), renderer: this.specialRateRenderer },
+      { title: 'Special Rate', data: 'specialRate', validator: /(^\d*\.?\d+-\d*\.?\d+:\d*\.?\d+)(,\s+(\d*\.?\d+-\d*\.?\d+:\d*\.?\d+))*$/ }, // 1.1-2.2:3.3
       { title: 'Contact No.', data: 'contactNumber', validator: /^$|^\d{10}$/ },
       { title: 'Bank Account No.', data: 'bankAccountNumber', validator: /^$|^[0-9]{5,20}$/ },
       { title: 'Bank IFSC Code', data: 'bankIfscCode', validator: /^$|^[A-Za-z]{4}\d{7}$/ },

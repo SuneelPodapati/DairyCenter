@@ -6,7 +6,7 @@ export interface IProducer {
     contactNumber: string;
     bankAccountNumber: string;
     bankIfscCode: string;
-    specialRate?: number;
+    specialRate?: string;
 
     loanDate?: string;
     loanAmount?: number;
@@ -24,7 +24,7 @@ export class Producer implements IProducer {
     contactNumber: string = '';
     bankAccountNumber: string = '';
     bankIfscCode: string = '';
-    specialRate: number;
+    specialRate?: string;
 
     loanDate: string = '';
     loanAmount: number = 0;
