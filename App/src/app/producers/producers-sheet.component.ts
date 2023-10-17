@@ -39,7 +39,6 @@ export class ProducersSheetComponent implements OnInit {
   allowSave: boolean = false;
   producers: IProducer[] = [];
   showAll: boolean = false;
-  orgData: IProducer[] = [];
 
   hot = () => this.hotRegisterer.getInstance(this.hotId)
   hotData = (data?: IProducer[]): IProducer[] => {
@@ -143,7 +142,6 @@ export class ProducersSheetComponent implements OnInit {
   updateData() {
     this.service.getProducers('all').subscribe(resp => {
       this.producers = resp;
-      this.orgData = JSON.parse(JSON.stringify(resp));
       this.hotData(this.producers);
     })
   }
@@ -161,21 +159,6 @@ export class ProducersSheetComponent implements OnInit {
         this.allowSave = false;
         this.updateData();
       })
-    }
-  }
-
-  migrate(): void {
-    if (this.allowSave) {
-      let data = this.hot().getSourceData() as IProducer[];
-      data.forEach(p => {
-        if (!!p.specialRate) {
-          let producer = this.orgData.find(x => x.code == p.code);
-          if (p.specialRate != producer.specialRate) {
-            this.service.updateProducer(p).subscribe();
-          }
-        }
-      });
-      this.clearLocalData();
     }
   }
 
