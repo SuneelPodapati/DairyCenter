@@ -23,12 +23,19 @@ jobs:
 
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
-
+        
+      - name: Build Front End
+        run: |
+          cd App
+          npm install --force
+          $env:NODE_OPTIONS = "--openssl-legacy-provider"
+          npm run build
+          
       - name: Restore NuGet packages
         run: nuget restore
 
       - name: Publish to folder
-        run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
+        run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Release
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
