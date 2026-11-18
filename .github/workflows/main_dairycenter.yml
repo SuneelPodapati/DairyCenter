@@ -6,15 +6,17 @@ name: Build and deploy ASP app to Azure Web App - dairycenter
 on:
   push:
     branches:
-      - main
+      - 'main'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: read #This is required for actions/checkout
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Setup MSBuild path
         uses: microsoft/setup-msbuild@v1.0.2
@@ -22,21 +24,14 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
 
-      - name: Build Front End
-        run: |
-          cd App
-          npm install --force
-          $env:NODE_OPTIONS = "--openssl-legacy-provider"
-          npm run build
-
       - name: Restore NuGet packages
         run: nuget restore
 
       - name: Publish to folder
-        run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Release
+        run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ASP-app
           path: '/published/**'
@@ -44,21 +39,18 @@ jobs:
   deploy:
     runs-on: windows-latest
     needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+    
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: ASP-app
-
+      
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'dairycenter'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5F12340340A84D95B06D032BB42734C2 }}
           package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1BCB2217EFAF434FBE619C3514D5B9A8 }}
